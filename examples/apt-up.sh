@@ -1,1 +1,1 @@
-ansible-playbook --inventory=hosts.ini --ask-become-pass playbooks/apt-upgrade.yml
+ansible-playbook --inventory=hosts.yml --ask-become-pass playbooks/apt-upgrade.yml

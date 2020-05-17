@@ -1,0 +1,19 @@
+- hosts: cluster
+  become: true
+  become_user: root
+  tasks:
+    - name: install boinc client
+      apt:
+        update_cache: yes
+        name: boinc-client
+        state: present
+    - name: start boinc client
+      systemd:
+        name: boinc-client
+        state: started 
+        enabled: yes
+    - name: register boinc project
+      command:
+        cmd: "boinccmd --project_attach {{ boinc_url }} {{ boinc_auth }}"
+        chdir: /var/lib/boinc
+        creates: /var/lib/boinc-client/{{ boinc_file }}
