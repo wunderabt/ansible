@@ -1,0 +1,16 @@
+- hosts: cluster
+  become: true
+  become_user: root
+  tasks:
+    - name: install nfs client
+      apt:
+        update_cache: yes
+        name: nfs-common
+        state: present
+    - name: add public mount to fstab
+      mount:
+        path: /mnt/public
+        src: troi:/home/public
+        fstype: nfs
+        state: mounted
+
