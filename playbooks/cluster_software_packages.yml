@@ -2,11 +2,22 @@
   become: true
   become_user: root
   tasks:
-    - name: install boinc client
+    - name: standard software packages
       apt:
+        pkg:
+        - htop
+        - sudo
+        - nfs-common
+        - git
+        - boinc-client
+        - docker.io
         update_cache: yes
-        name: boinc-client
         state: present
+    - name: add uwe to docker group
+      user:
+        name: uwe
+        groups: docker,sudo
+        append: yes
     - name: start boinc client
       systemd:
         name: boinc-client
