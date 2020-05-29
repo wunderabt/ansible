@@ -2,6 +2,14 @@
   become: true
   become_user: root
   tasks:
+    - name: kubernetes key
+      apt_key:
+        url: https://packages.cloud.google.com/apt/doc/apt-key.gpg
+        state: present
+    - name: kubernetes repo
+      apt_repository:
+        repo: deb https://apt.kubernetes.io/ kubernetes-xenial main
+        state: present
     - name: standard software packages
       apt:
         pkg:
@@ -9,10 +17,19 @@
         - sudo
         - nfs-common
         - git
+        - ethtool
         - boinc-client
         - docker.io
+        - apt-transport-https
+        - curl
         update_cache: yes
         state: present
+    - name: kubernetes packages
+      apt:
+        pkg:
+        - kubelet
+        - kubeadm
+        - kubectl
     - name: add uwe to docker group
       user:
         name: uwe
