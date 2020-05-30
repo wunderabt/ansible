@@ -2,6 +2,13 @@
   become: true
   become_user: root
   tasks:
+    - name: enable wake-on-lan
+      copy:
+        content: |
+          auto enp1s0
+          iface enp1s0 inet dhcp
+            ethernet-wol g
+        dest: /etc/network/interfaces.d/enp1s0
     - name: kubernetes key
       apt_key:
         url: https://packages.cloud.google.com/apt/doc/apt-key.gpg
@@ -22,6 +29,10 @@
         - docker.io
         - apt-transport-https
         - curl
+        - rsync
+        - nload
+        - make
+        - smartmontools
         update_cache: yes
         state: present
     - name: kubernetes packages
@@ -30,6 +41,8 @@
         - kubelet
         - kubeadm
         - kubectl
+        state: present
+        #when: ansible_facts['architecture'] != 'i686'
     - name: add uwe to docker group
       user:
         name: uwe
