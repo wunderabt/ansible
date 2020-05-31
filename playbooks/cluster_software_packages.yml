@@ -42,7 +42,7 @@
         - kubeadm
         - kubectl
         state: present
-        #when: ansible_facts['architecture'] != 'i686'
+      when: ansible_facts['architecture'] != 'i386'
     - name: add uwe to docker group
       user:
         name: uwe
