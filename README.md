@@ -1,4 +1,4 @@
-# Ansible
+# teaching myself Ansible
 
 As a tiny autodidact project I hooked up a cluster of three old Asus Eee PCs for experiments with
 ansible and kubernetes (and potentially Hadoop and HBase later). In my tradition to name computers after StarTrek
