@@ -1,0 +1,27 @@
+- hosts: cluster
+  tasks:
+    - name: stop boinc
+      service:
+        name: boinc-client
+        state: stopped
+      become: true
+      become_user: root
+    - name: swapoff
+      command: swapoff -a
+      become: true
+      become_user: root
+    - name: kubernetes reset
+      command: kubeadm reset --force
+      become: true
+      become_user: root
+    - name: kubernetes control plance
+      command: kubeadm init
+      when: ansible_facts['hostname'] == "bashir"
+      become: true
+      become_user: root
+    - name: config
+      command: cp -f /etc/kubernetes/admin.conf $HOME/.kube/config && chown $(id -u):$(id -g) $HOME/.kube/config
+      when: ansible_facts['hostname'] == "bashir"
+    - name: kubernetes pods & dashboard
+      command: kubectl apply -f https://docs.projectcalico.org/v3.14/manifests/calico.yaml && kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.0.0/aio/deploy/recommended.yaml
+      when: ansible_facts['hostname'] == "bashir"

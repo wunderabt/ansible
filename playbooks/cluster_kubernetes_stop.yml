@@ -1,0 +1,16 @@
+- hosts: cluster
+  tasks:
+    - name: kubernetes reset
+      command: kubeadm reset --force
+      become: true
+      become_user: root
+    - name: swapon
+      command: swapon -a
+      become: true
+      become_user: root
+    - name: start boinc
+      service:
+        name: boinc-client
+        state: restarted
+      become: true
+      become_user: root
