@@ -14,7 +14,7 @@
       command: kubeadm reset --force
       become: true
       become_user: root
-    - name: kubernetes control plance
+    - name: kubernetes control plane
       command: kubeadm init
       when: ansible_facts['hostname'] == "bashir"
       become: true
