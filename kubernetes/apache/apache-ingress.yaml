@@ -1,16 +1,12 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: basic-ingress
+  name: apache-ingress
 spec:
-  rules:
-  - http:
-      paths:
-      - path: /
-        pathType: Prefix
-        backend:
-          service:
-            name: apache
-            port:
-              number: 8082
+  defaultBackend:
+    service:
+      name: apache
+      port:
+        number: 80
+
 
